@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="jquery-2.0.3.min.js"></script>
+    <title>Tracer</title>
+</head>
+<body>
+    <canvas id="my_canvas">
+    </canvas>
+</body>
+<div>
+    <script type="application/javascript">
+
+        var my_canvas = $("canvas#my_canvas");
+        var my_canvas_context = my_canvas[0].getContext("2d");
+        var window_width = window.innerWidth;
+        var window_height = window.innerHeight;
+        var prev_x = 0;
+        var prev_y = 0;
+        var pointer_offset = 8;
+        var self = this;
+        var ws;
+        var ws_enabled = false;
+
+        if (window.WebSocket) {
+            ws = new WebSocket('ws://' + window.location.host);
+            ws_enabled = true;
+        } else {
+            alert("This Browser/version does not support Websockets. Please use a better option.")
+        }
+
+        $('html,body').css('cursor','crosshair');
+
+        function updateCanvasDimension(){
+            console.log("updated size to: " +  window_height + "," + window_width);
+            my_canvas.attr("height", window.innerHeight);
+            my_canvas.attr("width", window.innerWidth);
+        };
+
+        function drawRect(x, y){
+            my_canvas_context.fillRect(x-pointer_offset,y-pointer_offset,2,2);
+        };
+
+        function drawPath(x,y) {
+            my_canvas_context.moveTo(prev_x, prev_y);
+            my_canvas_context.lineTo(x, y);
+            my_canvas_context.strokeStyle = "#0000"
+            my_canvas_context.stroke();
+            prev_x = x;
+            prev_y = y;
+        }
+
+        updateCanvasDimension();
+
+        function draw(mouse_evt){
+            x = mouse_evt.clientX;
+            y = mouse_evt.clientY;
+            drawPath(x-pointer_offset,y-pointer_offset);
+        }
+
+        $(document).undelegate("#my_canvas","mousemove");
+
+        my_canvas.on("mousedown", function(event){
+            prev_x = event.clientX - pointer_offset;
+            prev_y = event.clientY - pointer_offset;
+            $(document).delegate("#my_canvas","mousemove", function(event){draw(event)});
+        });
+        my_canvas.on("mouseup", function(){
+            $(document).undelegate("#my_canvas","mousemove");
+        });
+
+
+    </script>
+</div>
+</html>
