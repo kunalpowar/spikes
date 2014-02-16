@@ -1,0 +1,48 @@
+// row matrix
+a = [1,2,3]
+// col matrix
+a = [1;2;3]
+
+//same as above
+a = 1:3
+//start::end
+a = 1:0.2:3
+
+a_transpose = a'
+
+//Identity matrix
+
+
+
+//Random elements in array 
+// create a matrix of 5X3 with random numbers from 1 to 10
+a = randi(10,[5,3])
+
+
+//loops
+for i=1:5
+end
+
+while (i+j < 20)
+end
+
+
+//printing
+
+fprintf("asads")
+disp("asads")
+
+
+//switch commands
+switch epx
+case case1
+statement
+case case2
+statement
+otherwise
+nothing
+end
+break
+
+// math
+
