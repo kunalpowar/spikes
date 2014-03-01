@@ -1,0 +1,7 @@
+modprobe pwm_test 
+echo am33xx_pwm > /sys/devices/bone_capemgr.8/slots 
+echo bone_pwm_P9_14 > /sys/devices/bone_capemgr.8/slots 
+
+
+## bone_capemgr.8 can be different
+
