@@ -1,0 +1,4 @@
+echo cape-bone-iio > /sys/devices/bone_capemgr.*/slots
+find /sys/ -name "*AIN*"
+///sys/devices/ocp.2/helper.14/AIN0
+cat /sys/devices/ocp.2/helper.14/AIN0
