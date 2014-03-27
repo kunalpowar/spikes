@@ -1,0 +1,39 @@
+func (p *bbbAnalogPin) init() error {
+	if p.initialized {
+		return nil
+	}
+
+	var err error
+	if err = p.ensureEnabled(); err != nil {
+		return err
+	}
+	if p.val, err = p.valueFile(); err != nil {
+		return err
+	}
+
+	p.initialized = true
+
+	return nil
+}
+func (p *bbbAnalogPin) ensureEnabled() error {
+	pattern := "/sys/devices/ocp.*/pwm_test_P*"
+	pwmPinDir, err := findFirstMatchingFile(pattern)
+	if err != nil {
+		return err
+	}
+
+	if pwmPinDir {	
+		return nil
+	}
+	else{
+		var slots = *os.File
+		slots, err = os.OpenFile(slotsFilePath, os.O_WRONLY, os.ModeExclusive)
+		defer slots.Close()
+		if err != nil {
+			return err
+		}
+	}
+
+	_, err = slots.WriteString(b.pin)
+	return err
+}
