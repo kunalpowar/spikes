@@ -1,0 +1,2 @@
+/sys/module/spidev/parameters/bufsize
+
