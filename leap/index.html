@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Dumper - Leap</title>
+    <script src="js/leap.min.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script>
+      if (window.WebSocket) {
+        ws = new WebSocket('ws://' + window.location.host + '/ws')
+      }
+      var controller = new Leap.Controller();
+      controller.loop(function(frame) {
+        if(frame.pointables.length > 0){
+        var pointable = frame.pointables[0];
+        var direction = pointable.direction;
+        var length = pointable.length;
+        var width = pointable.width;
+        var stabilizedPosition = pointable.stabilizedTipPosition;
+        var position = pointable.tipPosition;
+        var speed = pointable.tipVelocity;
+        var touchDistance = pointable.touchDistance;
+        var zone = pointable.touchZone;
+        $("#out")[0].innerHTML = "stabilizedPos:" + Math.floor(stabilizedPosition[0])+ "," + Math.floor(stabilizedPosition[1]) + "," + Math.floor(stabilizedPosition[2]) + "##########" + pointable.toString(); 
+      }
+        
+        
+      });
+    </script>
+  </head>
+  <body>
+    <div id="out"></div>
+    <div id="log"></div>
+  </body>
+</html>
